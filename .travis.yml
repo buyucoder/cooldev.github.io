@@ -1,0 +1,31 @@
+language: node_js
+node_js: stable
+branches:
+  only:
+  - blog-source
+cache:
+  directories:
+  - node_modules
+before_install:
+- export TZ='Asia/Shanghai'
+- openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv
+  -in ./.travis/id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- eval $(ssh-agent)
+- ssh-add ~/.ssh/id_rsa
+- cp .travis/ssh_config ~/.ssh/config
+- npm install -g hexo-cli
+install:
+- npm install
+script:
+- hexo generate
+after_success:
+- git config --global user.name "buyucoder"
+- git config --global user.email "23715018@qq.com"
+- hexo deploy
+- gulp deploy --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
+env:
+  global:
+  - secure: f3FBdJWwsD1jZfsROCPVJXclfrslxDzDvv+ga2EKOM1sy52FuTWpIb4RQtS319i9trBV9WX1k/aPRAa5HmXnRV3OnlE9hf7ckv7zlIxaLvefoyLvz7Cdmfx9vDvsdUOAxGYKqF/H5nu55NscbN8G9MpZ0GWPHgvlXCWf2RGLs0TgufErpbqNmdy1sTdOaiEJ5EmJ0L80gIXFcz8gXgeuyhYvgT1NMI2y1eRNvLWGzFgrR/36OL3MU5PQvCuizSmFis7nCCtoPW+98ebMkTGzf+DLDcLl80LJ+vKP+sdC4MGACxKV9WXA2/C3CFpIjyF9msg7JrV1S91XtoTXtt5h/T93FVQJBjaQNaWEtP3aPG1AGsXuXEUn8oKl8A9soaaqFRF64rnKN/VlfGI/8vUKVy285ApUCavTjmH2VDn9DIsnY5UIlxkPkYnhBvUkjnQQT0o11NnaTm4mpY51YeFgPKBAApLeTXauDH1XDIcnTAV3PWxPOsSlMGYYumrson7N81PVUNdeZXYK6AeUOTiz3Ia/CTRTLG2BeRH6I+8nLLH/WsZL/1226rhG5JefWP6yvwWMk7hXA9r7+3cl7jL3WXn6nGXuH/V34L4fF7OLQYUDW0nA2fcsVK7rmfaScBjcL5GjulXhcmc2bwWTMWyTDyGVCNHCBpysVdgKbL4WFss=
+  - secure: d6GMW735/MkgH+lupGS4EmlblUJGqulHcfqqeJPnvsUYIOKXjfdoJxwWCGV9Z/BWWrrA1GXns/cWvFP8JU2zoYn6z87lxgX1z6MD0nE44VtqVf5WC9rLMsGmvlgKEclqAUruxzKmqjBWpOuuahgvOJyLiJgw8xSymSDs2yv7x4gXARLHq+z0YRKm81tzvsWZ+kKIJnCAaDHmMSKVe+6t7PZe0TBPLZMk03mwpGFP3QQdrmkvclUnIyme415j7QsW8YimP2jWWpssaV3dgLWG+pSMjtDw6xx6MOjDLBU3+W5p549gcMPguXex1svpWrPjLMLCIfkKAZJ3zjbdUBrxQ0OH9IzTcbddj/YdQN9HuUzBDYKUa1b1BavMy43AIWSa0dMUUh1tNxe37yy+txLW4US3Xj8esc6lol7G8AhuE+oU0cWpwKis7WdTBcHNzKh0/gUSlcypt/qx9VzJrm3K5wvgEToesWBlI8NZrluT7GfPT8IrZa1dN30hXAlC7PVbDFrqxQo0bG7BzeFBxImzACXCpcq1HsIueQw/vmpicNHjecFJF4faw4OIAu+YAFcAxk8Lety31i8VCjVBVMwqMR2xy83odGxLgGRuwF8utbGFpRFSHw+zsy/74pn61+R26aqoYrbhdmyPGOkSEfxjLbvu00SjGdKjknS4iiq7Pws=
+  - secure: fhujZdaf6wih/nIfho1Rm+HzJ5XIJ0gz0AYjfEKLpP4NnLBOpByirtKWbnDqxnIZ8s1XJYHV30C9RqCNtnmCmLzVaQM2Won5kqj543uFYfbuTw+xNs7TKf8+YD/nEWiQEeQpcjfofVG7PlMbwMQ6Hfru/JA6ieCcNP5LQz/FwHVgGCxUsiYAe/oeXSbd55K8Ilu/g529Gp1s5TrHct5kvRFPlBy7wOrnn/l37M0IWBxnGVmOzANsJUcbJRSc8I1/ZpA/X8eGzY1GGB9OI6VwXYjEW9R/RZdu0ATVgcEUFU83HTJPMlurj/JEXpr2TrA3wnCnc+cFLOLWrx6uXgA8AFcr/HNW89nhAP5fdpyck69YqoGnrv2sQUv+A+OglLvv2VSLZ025Ivk+TAg5EKL2zUv8MTDI1gryhnOmvmlXemL5mdZL+NShrl3tiFIXgw/Flpzdr4FqAS+pLt35mhcZJY6B1YEGNnZANw2YDaheeD5+fnuqTRqrwKYR5cLuGplDp8VNLnwnZnaM4KJFQ2JN4NISRxFyPez6BAgHlXvY30rzKLuk7eEOtZZWvSJT57WaOhaleoh7sBxqnO3EVYr9xeXhopYPHCNoug8tINBNqUzsGnovpc7TwXQwTezg54sPxNBtY03DZQFocCah/oNE4W8hdfAC4+ym+wgbDrNVO28=
