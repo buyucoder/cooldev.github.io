@@ -100,7 +100,8 @@ hexo 的 deploy 可以通过 Git  , FTPSync，Rsync ，SFTP，Heroku，OpenShift
 ```
 gem install travis
 ```
-进行登录
+进行登录,输入github账号密码登录 ，在cmd中运行，不要在gitbash中运行。
+
 ```
 travis login
 ```

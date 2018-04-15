@@ -3,3 +3,5 @@ Thumbs.db
 *.log
 public/
 .deploy*/
+.travis/id_rsa
+._config.yml
