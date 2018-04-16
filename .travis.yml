@@ -24,6 +24,11 @@ after_success:
 - git config --global user.email "23715018@qq.com"
 - hexo deploy
 - gulp deploy --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
+notifications:
+  email:
+    - 23715018@qq.com
+  on_success: change
+  on_failure: always
 env:
   global:
   - secure: f3FBdJWwsD1jZfsROCPVJXclfrslxDzDvv+ga2EKOM1sy52FuTWpIb4RQtS319i9trBV9WX1k/aPRAa5HmXnRV3OnlE9hf7ckv7zlIxaLvefoyLvz7Cdmfx9vDvsdUOAxGYKqF/H5nu55NscbN8G9MpZ0GWPHgvlXCWf2RGLs0TgufErpbqNmdy1sTdOaiEJ5EmJ0L80gIXFcz8gXgeuyhYvgT1NMI2y1eRNvLWGzFgrR/36OL3MU5PQvCuizSmFis7nCCtoPW+98ebMkTGzf+DLDcLl80LJ+vKP+sdC4MGACxKV9WXA2/C3CFpIjyF9msg7JrV1S91XtoTXtt5h/T93FVQJBjaQNaWEtP3aPG1AGsXuXEUn8oKl8A9soaaqFRF64rnKN/VlfGI/8vUKVy285ApUCavTjmH2VDn9DIsnY5UIlxkPkYnhBvUkjnQQT0o11NnaTm4mpY51YeFgPKBAApLeTXauDH1XDIcnTAV3PWxPOsSlMGYYumrson7N81PVUNdeZXYK6AeUOTiz3Ia/CTRTLG2BeRH6I+8nLLH/WsZL/1226rhG5JefWP6yvwWMk7hXA9r7+3cl7jL3WXn6nGXuH/V34L4fF7OLQYUDW0nA2fcsVK7rmfaScBjcL5GjulXhcmc2bwWTMWyTDyGVCNHCBpysVdgKbL4WFss=
