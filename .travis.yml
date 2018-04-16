@@ -19,7 +19,7 @@ install:
 - npm install
 script:
 - hexo clean
-- hexo generate
+- hexo generate && gulp
 after_success:
 - git config --global user.name "buyucoder"
 - git config --global user.email "23715018@qq.com"

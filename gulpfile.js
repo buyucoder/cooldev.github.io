@@ -48,7 +48,10 @@ gulp.task('deploy', function() {
     password: args.password,
     log: gutil.log
   });
-  gulp.src(['index.html', './**/*.css'])
+  var globs = [
+        '**'
+    ];
+  gulp.src(globs,{cwd:'./public/',base:'.',buffer:false})
     .pipe(conn.newer(remotePath))
     .pipe(conn.dest(remotePath));
 });
