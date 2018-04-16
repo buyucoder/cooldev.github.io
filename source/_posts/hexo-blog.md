@@ -152,7 +152,7 @@ travis 在windows系统下加密文件，会导致解不开，需要使用linux 
 https://www.jianshu.com/p/3dafd38f3733
 https://docs.travis-ci.com/user/encrypting-files/
 
-
+travis encrypt-file id_rsa  -r  buyucoder/cooldev.github.io
 
 
 
