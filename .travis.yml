@@ -24,7 +24,7 @@ after_success:
 - git config --global user.name "buyucoder"
 - git config --global user.email "23715018@qq.com"
 - hexo deploy
-- gulp deploy --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
+- gulp deploy-ftp --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
 notifications:
   email:
     - 23715018@qq.com
