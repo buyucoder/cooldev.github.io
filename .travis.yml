@@ -27,7 +27,7 @@ after_success:
 notifications:
   email:
     - 23715018@qq.com
-  on_success: change
+  on_success: always
   on_failure: always
 env:
   global:
