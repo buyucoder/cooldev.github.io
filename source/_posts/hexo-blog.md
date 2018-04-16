@@ -111,9 +111,51 @@ travis login
 ```
 mkdir .travis && cd .travis
 cp ~/.ssh/id_rsa .
-travis encrypt-file id_rsa
+travis encrypt-file id_rsa --add
 rm id_rsa
 ```
+
+会输出如下：
+
+```
+travis encrypt-file id_rsa
+detected repository as buyucoder/cooldev.github.io
+encrypting id_rsa for buyucoder/cooldev.github.io
+storing result as id_rsa.enc
+storing secure env variables for decryption
+
+openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d
+
+Make sure to add id_rsa.enc to the git repository.
+Make sure not to add id_rsa to the git repository.
+Commit all changes to your .travis.yml.
+
+```
+生成加密后的文件是`id_rsa.enc` , 其中 `openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d`
+就是要添加到 .travis.yml 文件中的，可以直接使用 `travis encrypt-file id_rsa --add` 自动将命令添加到 .travis.yml 文件中。
+
+$encrypted_770f1dea3d53_key 和 $encrypted_770f1dea3d53_iv 是环境变量， 会保存在 Travis CI 网站中对应项目的设置中，Travis 在构建时需要这两个值来进行解密。
+
+
+将 ftp 主机地址，用户名 和密码进行加密
+
+```
+travis encrypt FTP_HOST=qxu1606600007.my3w.com --add
+travis encrypt FTP_USER=qxu1606600007 --add
+travis encrypt FTP_PASSWORD=qxu160660000789757 --add
+```
+
+## 常见错误
+
+1.openssl 解密错误
+travis 在windows系统下加密文件，会导致解不开，需要使用linux 和mac 系统。。。
+https://www.jianshu.com/p/3dafd38f3733
+https://docs.travis-ci.com/user/encrypting-files/
+
+
+
+
+
 
 
   [1]: https://pages.github.com/
