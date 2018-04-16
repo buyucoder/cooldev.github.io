@@ -40,7 +40,7 @@ gulp.task('default', [
 ]);
 
 //部署 ftp
-gulp.task('deploy', function() {
+gulp.task('deploy-ftp', function() {
   var remotePath = '/htdocs/test/';
   var conn = ftp.create({
     host: args.host,
@@ -52,6 +52,7 @@ gulp.task('deploy', function() {
         './public/**'
     ];
   gulp.src(globs,{base:'.',buffer:false})
+	.pipe(rename({dirname: ''}))  
     .pipe(conn.newer(remotePath))
     .pipe(conn.dest(remotePath));
 });
