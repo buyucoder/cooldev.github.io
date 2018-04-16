@@ -8,7 +8,6 @@ var htmlclean = require('gulp-htmlclean');
 var ftp = require('vinyl-ftp');
 var gutil = require('gulp-util');
 var minimist = require('minimist');
-var rename = require('gulp-rename');
 var args = minimist(process.argv.slice(3));
 
 // 压缩 public 目录 css
@@ -52,10 +51,7 @@ gulp.task('deploy-ftp', function() {
   var globs = [
         './public/**'
     ];
-  gulp.src(globs,{base:'.',buffer:false})
-	.pipe(rename(function (path) {
-		path.dirname += "";
-	}))
+  gulp.src(globs,{base:'./public',buffer:false})
     .pipe(conn.newer(remotePath))
     .pipe(conn.dest(remotePath));
 });
