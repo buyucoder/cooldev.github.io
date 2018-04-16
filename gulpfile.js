@@ -8,6 +8,7 @@ var htmlclean = require('gulp-htmlclean');
 var ftp = require('vinyl-ftp');
 var gutil = require('gulp-util');
 var minimist = require('minimist');
+var rename = require('gulp-rename');
 var args = minimist(process.argv.slice(3));
 
 // 压缩 public 目录 css
