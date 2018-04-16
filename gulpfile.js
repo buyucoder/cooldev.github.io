@@ -56,6 +56,7 @@ gulp.task('deploy-ftp', function() {
 	.pipe(rename(function (path) {
 		path.dirname += "";
 	}))
+	
     .pipe(conn.newer(remotePath))
     .pipe(conn.dest(remotePath));
 });
