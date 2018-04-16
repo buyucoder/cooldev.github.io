@@ -18,7 +18,6 @@ before_install:
 install:
 - npm install
 script:
-- hexo clean
 - hexo generate && gulp
 after_success:
 - git config --global user.name "buyucoder"
