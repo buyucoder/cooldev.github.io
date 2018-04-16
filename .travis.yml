@@ -14,6 +14,7 @@ before_install:
 - ssh-add ~/.ssh/id_rsa
 - cp .travis/ssh_config ~/.ssh/config
 - npm install -g hexo-cli
+- npm install -g gulp
 install:
 - npm install
 script:
