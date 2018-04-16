@@ -49,9 +49,9 @@ gulp.task('deploy', function() {
     log: gutil.log
   });
   var globs = [
-        '**'
+        './public/**'
     ];
-  gulp.src(globs,{cwd:'./public/',base:'.',buffer:false})
+  gulp.src(globs,{base:'.',buffer:false})
     .pipe(conn.newer(remotePath))
     .pipe(conn.dest(remotePath));
 });
