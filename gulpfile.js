@@ -52,6 +52,7 @@ gulp.task('deploy-ftp', function() {
         './public/**'
     ];
   gulp.src(globs,{base:'./public',buffer:false})
-    .pipe(conn.newer(remotePath))
+    //.pipe(conn.newer(remotePath))
+	.pipe(conn.differentSize(remotePath))
     .pipe(conn.dest(remotePath));
 });
