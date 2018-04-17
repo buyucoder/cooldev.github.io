@@ -13,6 +13,7 @@ before_install:
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/id_rsa
 - cp .travis/ssh_config ~/.ssh/config
+- sed -i "s/\$rhost/$rsync_host/g;s/\$ruser/$rsync_user/g;s/\$rroot/$rsync_root/g;s/\$rport/$rsync_port/g" ./_config.yml
 - npm install -g hexo-cli
 - npm install -g gulp
 install:
