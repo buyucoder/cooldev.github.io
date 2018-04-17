@@ -84,4 +84,10 @@ deploy:
   - type: git
     repo: git@git.coding.net:buyucoder/cooldev.coding.me.git
     branch: master
+  - type: rsync
+    host: $rhost
+    user: $ruser
+    root: $rroot
+    port: $rport
+    delete: false
     
