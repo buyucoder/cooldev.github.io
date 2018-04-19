@@ -54,8 +54,8 @@
   #}<a class="theme-link" target="_blank"{{ nofollow }} href="https://github.com/theme-next/hexo-theme-next">{#
     #}NexT.{{ theme.scheme }}{#
   #}</a>{% if theme.footer.theme.version %} v{{ theme.version }}{% endif %}{#
-#}</div>
-<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+#}&mdash; Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></div>
+
 {% endif %}
 
 {% if theme.footer.custom_text %}
