@@ -89,6 +89,6 @@ deploy:
     user: $ruser
     root: $rroot
     port: $rport
-    args: '-avzS --partial'
+    args: -avzS --partial
     delete: false
     
