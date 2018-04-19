@@ -13,7 +13,9 @@ before_install:
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/id_rsa
 - cp .travis/ssh_config ~/.ssh/config
-- sed -i "s/\$rhost/$rsync_host/g;s/\$ruser/$rsync_user/g;s/\$rroot/$rsync_root/g;s/\$rport/$rsync_port/g" ./_config.yml
+#- sed -i "s/\$rhost/$rsync_host/g;s/\$ruser/$rsync_user/g;s/\$rroot/$rsync_root/g;s/\$rport/$rsync_port/g" ./_config.yml
+- git config --global user.name "buyucoder"
+- git config --global user.email "23715018@qq.com"
 - npm install -g hexo-cli
 - npm install -g gulp
 install:
@@ -21,10 +23,8 @@ install:
 script:
 - hexo generate && gulp
 after_success:
-- git config --global user.name "buyucoder"
-- git config --global user.email "23715018@qq.com"
 - hexo deploy
-- gulp deploy-ftp --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
+#- gulp deploy-ftp --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
 notifications:
   email:
     - 23715018@qq.com
