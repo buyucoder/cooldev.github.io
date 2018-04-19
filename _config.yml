@@ -89,6 +89,6 @@ deploy:
     user: $ruser
     root: $rroot
     port: $rport
-    args: --update
+    args: '--update'
     delete: true
     
