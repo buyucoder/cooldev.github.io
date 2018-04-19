@@ -6,17 +6,18 @@ yarn.lock
 package-lock.json
 node_modules/
 
+#注释原有忽略的文件 2018年4月19日
 # Ignore optional external libraries
-source/lib/*
+#source/lib/*
 
 # Track internal libraries & Ignore unused verdors files
-source/lib/font-awesome/less/
-source/lib/font-awesome/scss/
-!source/lib/font-awesome/*
+#source/lib/font-awesome/less/
+#source/lib/font-awesome/scss/
+#!source/lib/font-awesome/*
 
-!source/lib/jquery/
+#!source/lib/jquery/
 
-source/lib/ua-parser-js/*
-!source/lib/ua-parser-js/dist/
+#source/lib/ua-parser-js/*
+#!source/lib/ua-parser-js/dist/
 
-!source/lib/velocity/
+#!source/lib/velocity/
