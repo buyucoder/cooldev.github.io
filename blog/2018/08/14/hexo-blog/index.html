@@ -1,0 +1,319 @@
+<!DOCTYPE html><html class="theme-next mist use-motion" lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/blog/css/main.css?v=6.1.0" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=6.1.0"><link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=6.1.0"><link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=6.1.0"><link rel="mask-icon" href="/blog/images/logo.svg?v=6.1.0" color="#222"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/blog/",scheme:"Mist",version:"6.1.0",sidebar:{position:"left",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,fastclick:!1,lazyload:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="将hexo博客系统自动部署到多个服务器上 目标：  自动部署到以下服务器:   Github Pages  coding Pages 自建服务器/FTP   通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。"><meta name="keywords" content="博客,hexo"><meta property="og:type" content="article"><meta property="og:title" content="基于hexo博客多服务器全自动构建部署系统"><meta property="og:url" content="http://cooldev.cn/2018/08/14/hexo-blog/index.html"><meta property="og:site_name" content="CoolDev博客"><meta property="og:description" content="将hexo博客系统自动部署到多个服务器上 目标：  自动部署到以下服务器:   Github Pages  coding Pages 自建服务器/FTP   通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。"><meta property="og:locale" content="zh-CN"><meta property="og:updated_time" content="2018-08-14T02:39:30.000Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="基于hexo博客多服务器全自动构建部署系统"><meta name="twitter:description" content="将hexo博客系统自动部署到多个服务器上 目标：  自动部署到以下服务器:   Github Pages  coding Pages 自建服务器/FTP   通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。"><link rel="alternate" href="/blog/atom.xml" title="CoolDev博客" type="application/atom+xml"><link rel="canonical" href="http://cooldev.cn/2018/08/14/hexo-blog/"><script type="text/javascript" id="page.configurations">CONFIG.page={sidebar:""}</script><title>基于hexo博客多服务器全自动构建部署系统 | CoolDev博客</title><noscript><style type="text/css">.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/blog/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">CoolDev博客</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button aria-label="切换导航栏"><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home menu-item-active"><a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-rss"></i><br>RSS</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://cooldev.cn/blog/2018/08/14/hexo-blog/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="buyucoder"><meta itemprop="description" content=""><meta itemprop="image" content="/blog/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="CoolDev博客"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">基于hexo博客多服务器全自动构建部署系统</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-14T10:39:21+08:00">2018-08-14</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span> <a href="/blog/2018/08/14/hexo-blog/#SOHUCS" itemprop="discussionUrl"><span class="post-meta-item-text">评论数：</span><span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/08/14/hexo-blog/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><p>将hexo博客系统自动部署到多个服务器上</p><p>目标：</p><ul><li>自动部署到以下服务器:</li></ul><ol><li><a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a></li><li><a href="https://coding.net/v1/pages/" target="_blank" rel="noopener">coding Pages</a></li><li>自建服务器/FTP</li></ol><ul><li>通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。</li></ul><a id="more"></a><h2 id="为什么需要自动构建部署？"><a href="#为什么需要自动构建部署？" class="headerlink" title="为什么需要自动构建部署？"></a>为什么需要自动构建部署？</h2><p>hexo 静态博客的优点：全静态，可以用markdown写文字，部署简单，免费的github或一个ftp空间都可以存放。<br>缺点是：hexo 是基于 nodejs 的，需要安装 nodejs 环境，当我们换了一台电脑需要重新安装环境，并从 github 上克隆下来 博客的代码，略显繁琐，同时每一次新发布文章或者修改了hexo或者主题的配置，都需要 敲命令 hexo generate 和 hexo deploy 来部署，也是略显繁琐。</p><p>如果 hexo generate 和 hexo deploy 的过程能够自动，那么当更换电脑时只要下载git环境，写markdown提交就行了，不需要安装nodejs也不需要敲命令来部署。就算不安装git直接在github网站编辑提交也可以。</p><h2 id="为什么要部署在多个服务器上？"><a href="#为什么要部署在多个服务器上？" class="headerlink" title="为什么要部署在多个服务器上？"></a>为什么要部署在多个服务器上？</h2><p>1；【免费】<a href="https://github.com" target="_blank" rel="noopener">github</a> 使用方便，空间大，存放代码方便，但是在美国，在国内的访问速度是比较慢的。<br>2；【免费】codeing.net 是国内的，但是它的静态网站托管功能服务器是在香港的，在国内打开速度是不慢的，但是据测不是很稳定。<br>3；【收费】因此在添加一个国内的服务器或者ftp？这样更稳定，如果不想续费了，有前面两个网站还是可以打开的。</p><h2 id="本地搭建-hexo-博客环境"><a href="#本地搭建-hexo-博客环境" class="headerlink" title="本地搭建 hexo 博客环境"></a>本地搭建 hexo 博客环境</h2><h2 id="建立代码仓库"><a href="#建立代码仓库" class="headerlink" title="建立代码仓库"></a>建立代码仓库</h2><p>coding.net的免费会员的git仓库空间只有128M，还不能绑定自定义域名，可以免费升级到银牌会员有512M，可以绑定自定义域名。</p><p>因此：<br>hexo的代码是放在github上同时也放生成后的静态网页，coding.net 只存放生成后的静态网页。</p><h3 id="建立-github-仓库"><a href="#建立-github-仓库" class="headerlink" title="建立 github 仓库"></a>建立 github 仓库</h3><p>仓库名必须是 {username}.github.io 的格式，如 cooldev.github.io</p><p>主分支默认为master，建立一个分支 blog-source 用来存放 hexo 的代码。</p><h3 id="建立-coding-仓库"><a href="#建立-coding-仓库" class="headerlink" title="建立 coding 仓库"></a>建立 coding 仓库</h3><p>coding.net的 Pages 服务是分两种的，用户Pages和 项目Pages ,参见<a href="https://coding.net/help/doc/pages/creating-pages.html" target="_blank" rel="noopener">官方文档</a></p><table><thead><tr><th>Coding Pages 类型</th><th>Pages 默认分配的 URL</th><th>允许的部署来源</th><th></th></tr></thead><tbody><tr><td>用户 Pages</td><td>{user_name}.coding.me</td><td>master 分支</td><td></td></tr><tr><td>项目 Pages</td><td>{user_name}.coding.me/{project_name}</td><td>master 分支、coding-pages 分支、或 master 分支中的 /docs 目录</td></tr></tbody></table><p>比如你的用户名是cooldev ，如果创建的仓库名 是 cooldev.coding.me ， 那么访问的域名就是 <a href="http://cooldev.coding.me" target="_blank" rel="noopener">http://cooldev.coding.me</a><br>如果创建的仓库名其他名字如blog ，访问域名是 <a href="http://cooldev.coding.me/blog" target="_blank" rel="noopener">http://cooldev.coding.me/blog</a></p><p>这个其实没有什么影响，因为我们要绑定域名，不用默认分配的域名。</p><p>这里只要一个master分支就行了。</p><p>创建仓库完毕后，进入项目 开启 Pages 服务。参见官方<a href="https://coding.net/help/doc/pages/creating-pages.html#_Pages" target="_blank" rel="noopener">文档</a></p><h2 id="通过SSH连接-Github-和-Coding"><a href="#通过SSH连接-Github-和-Coding" class="headerlink" title="通过SSH连接 Github 和 Coding"></a>通过SSH连接 Github 和 Coding</h2><p>使用 gitBash 命令行 工具输入，直接三次回车不需要输入密码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure><p>生成两个文件，id_rsa 和 id_ras.pub ，默认生成目录：</p><ul><li>Linux 系统：~/.ssh</li><li>Mac 系统：~/.ssh</li><li>Windows 7及以上系统：C:\Users{username}.ssh 管理员：C:\Users\Administrator.ssh</li></ul><h2 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h2><p>自动构建部署使用的是 <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a> ，可以完美的和 github 的搭配起来，当往 github 提交后会自动触发 Travis 的构建过程。<br>了解什么是 Travis ，可以参考阮一峰的博客文章《<a href="http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html" target="_blank" rel="noopener">持续集成服务 Travis CI 教程</a>》</p><h2 id="使用-Travis-命令行加密文件和文本"><a href="#使用-Travis-命令行加密文件和文本" class="headerlink" title="使用 Travis 命令行加密文件和文本"></a>使用 Travis 命令行加密文件和文本</h2><p>hexo 的 deploy 可以通过 Git , FTPSync，Rsync ，SFTP，Heroku，OpenShift 方式部署，可以参见 hexo 的<a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">部署文档</a></p><p>通过 Git 的方式 需要使用 SSH 秘钥文件，<br>通过 FTPSync 的方式 需要使用FTP的账号密码；</p><p>通过 Travis CI 部署又需要将这些信息放在github里面 ，这些都是不可以公开的，但是在 github 和 codeing.net 的代码都是公开的（私有项目需要付费）， 所以需要加密 才能保证信息的安全。</p><p>加密使用的是 Travis 的命令行工具，Travis命令行工具是基于 Ruby 语言的，所以我们需要先在本地安装 Ruby 环境并安装 travis命令行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install travis</span><br></pre></td></tr></table></figure><p>进行登录,输入github账号密码登录 ，在cmd中运行，不要在gitbash中运行。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">travis login</span><br></pre></td></tr></table></figure><p>然后在博客的根目录下建立 .travis 文件夹来存放相关的资料（以下操作在gitbash中输入，不分操作系统）：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir .travis &amp;&amp; cd .travis</span><br><span class="line">cp ~/.ssh/id_rsa .</span><br><span class="line">travis encrypt-file id_rsa --add</span><br><span class="line">rm id_rsa</span><br></pre></td></tr></table></figure><p>会输出如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt-file id_rsa</span><br><span class="line">detected repository as buyucoder/cooldev.github.io</span><br><span class="line">encrypting id_rsa for buyucoder/cooldev.github.io</span><br><span class="line">storing result as id_rsa.enc</span><br><span class="line">storing secure env variables for decryption</span><br><span class="line"></span><br><span class="line">openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d</span><br><span class="line"></span><br><span class="line">Make sure to add id_rsa.enc to the git repository.</span><br><span class="line">Make sure not to add id_rsa to the git repository.</span><br><span class="line">Commit all changes to your .travis.yml.</span><br></pre></td></tr></table></figure><p>生成加密后的文件是<code>id_rsa.enc</code> , 其中 <code>openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d</code><br>就是要添加到 .travis.yml 文件中的，可以直接使用 <code>travis encrypt-file id_rsa --add</code> 自动将命令添加到 .travis.yml 文件中。</p><p>$encrypted_770f1dea3d53_key 和 $encrypted_770f1dea3d53_iv 是环境变量， 会保存在 Travis CI 网站中对应项目的设置中，Travis 在构建时需要这两个值来进行解密。</p><p>将 ftp 主机地址，用户名 和密码进行加密</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt FTP_HOST=qxu1606600007.my3w.com --add</span><br><span class="line">travis encrypt FTP_USER=qxu1606600007 --add</span><br><span class="line">travis encrypt FTP_PASSWORD=qxu160660000789757 --add</span><br></pre></td></tr></table></figure><h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>1.openssl 解密错误<br>travis 在windows系统下加密文件，会导致解不开，需要使用linux 和mac 系统。。。<br><a href="https://www.jianshu.com/p/3dafd38f3733" target="_blank" rel="noopener">https://www.jianshu.com/p/3dafd38f3733</a><br><a href="https://docs.travis-ci.com/user/encrypting-files/" target="_blank" rel="noopener">https://docs.travis-ci.com/user/encrypting-files/</a></p><p>travis encrypt-file id_rsa -r buyucoder/cooldev.github.io</p></div><footer class="post-footer"><div class="post-tags"> <a href="/blog/tags/博客/" rel="tag"># 博客</a> <a href="/blog/tags/hexo/" rel="tag"># hexo</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/blog/2018/05/14/everything/" rel="next" title="搜索神器Everything 1.4.1.895"><i class="fa fa-chevron-left"></i> 搜索神器Everything 1.4.1.895</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/blog/2018/08/14/centos7修改时区/" rel="prev" title="Centos7 修改时区">Centos7 修改时区<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="SOHUCS"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">buyucoder</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/blog/archives/"><span class="site-state-item-count">3</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/blog/categories/index.html"><span class="site-state-item-count">3</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/blog/tags/index.html"><span class="site-state-item-count">5</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="feed-link motion-element"><a href="/blog/atom.xml" rel="alternate"><i class="fa fa-rss"></i> RSS</a></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要自动构建部署？"><span class="nav-number">1.</span> <span class="nav-text">为什么需要自动构建部署？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要部署在多个服务器上？"><span class="nav-number">2.</span> <span class="nav-text">为什么要部署在多个服务器上？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地搭建-hexo-博客环境"><span class="nav-number">3.</span> <span class="nav-text">本地搭建 hexo 博客环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立代码仓库"><span class="nav-number">4.</span> <span class="nav-text">建立代码仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-github-仓库"><span class="nav-number">4.1.</span> <span class="nav-text">建立 github 仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-coding-仓库"><span class="nav-number">4.2.</span> <span class="nav-text">建立 coding 仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过SSH连接-Github-和-Coding"><span class="nav-number">5.</span> <span class="nav-text">通过SSH连接 Github 和 Coding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Travis-CI"><span class="nav-number">6.</span> <span class="nav-text">Travis CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Travis-命令行加密文件和文本"><span class="nav-number">7.</span> <span class="nav-text">使用 Travis 命令行加密文件和文本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见错误"><span class="nav-number">8.</span> <span class="nav-text">常见错误</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2018</span><span class="with-love" id="animate"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">buyucoder</span></div><div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.0</div> <span class="post-meta-divider">|</span><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.1.0 <span class="post-meta-divider">|</span> Hosted by <a href="https://pages.coding.me" style="font-weight:700">Coding Pages</a></div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/blog/js/src/utils.js?v=6.1.0"></script><script type="text/javascript" src="/blog/js/src/motion.js?v=6.1.0"></script><script type="text/javascript" src="/blog/js/src/scrollspy.js?v=6.1.0"></script><script type="text/javascript" src="/blog/js/src/post-details.js?v=6.1.0"></script><script type="text/javascript" src="/blog/js/src/bootstrap.js?v=6.1.0"></script><script type="text/javascript">!function(){var t,e,n,a,c="cytznxuEX",o="e295c19407035c166ee488c87c41a0ed";if((window.innerWidth||document.documentElement.clientWidth)<960)window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id='+c+"&conf="+o+'"><\/script>');else{t="https://changyan.sohu.com/upload/changyan.js",e=function(){window.changyan.api.config({appid:c,conf:o})},n=document.getElementsByTagName("head")[0]||document.head||document.documentElement,(a=document.createElement("script")).setAttribute("type","text/javascript"),a.setAttribute("charset","UTF-8"),a.setAttribute("src",t),"function"==typeof e&&(window.attachEvent?a.onreadystatechange=function(){var t=a.readyState;"loaded"!==t&&"complete"!==t||(a.onreadystatechange=null,e())}:a.onload=e),n.appendChild(a)}}()</script><script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script></body></html>

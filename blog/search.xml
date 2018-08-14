@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Centos7 修改时区]]></title>
+    <url>%2Fblog%2F2018%2F08%2F14%2Fcentos7%E4%BF%AE%E6%94%B9%E6%97%B6%E5%8C%BA%2F</url>
+    <content type="text"><![CDATA[查看时区:12[vagrant@localhost ~]$ timedatectl | grep &quot;Time zone&quot; Time zone: UTC (UTC, +0000) 修改时区:1sudo timedatectl set-timezone Asia/Shanghai 使用ntpdate 同步时间: 安装:1yum install -y ntpdate ntpdate 时间服务器 时间服务器:https://blog.csdn.net/maxsky/article/details/53866475 推荐使用: pool.ntp.org阿里云的:ntp1.aliyun.comntp2.aliyun.comntp3.aliyun.comntp4.aliyun.comntp5.aliyun.comntp6.aliyun.comntp7.aliyun.com 1sudo ntpdate ntp1.aliyun.com crontab定时任务 同步时间: 使用crontab -e 添加一行,每20分钟同步一次时间: 1*/20 * * * * /sbin/ntpdate pool.ntp.org &gt; /dev/null 2&gt;&amp;1]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Centos7</tag>
+        <tag>时区</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[基于hexo博客多服务器全自动构建部署系统]]></title>
+    <url>%2Fblog%2F2018%2F08%2F14%2Fhexo-blog%2F</url>
+    <content type="text"><![CDATA[将hexo博客系统自动部署到多个服务器上 目标： 自动部署到以下服务器: Github Pages coding Pages 自建服务器/FTP 通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。 为什么需要自动构建部署？hexo 静态博客的优点：全静态，可以用markdown写文字，部署简单，免费的github或一个ftp空间都可以存放。缺点是：hexo 是基于 nodejs 的，需要安装 nodejs 环境，当我们换了一台电脑需要重新安装环境，并从 github 上克隆下来 博客的代码，略显繁琐，同时每一次新发布文章或者修改了hexo或者主题的配置，都需要 敲命令 hexo generate 和 hexo deploy 来部署，也是略显繁琐。 如果 hexo generate 和 hexo deploy 的过程能够自动，那么当更换电脑时只要下载git环境，写markdown提交就行了，不需要安装nodejs也不需要敲命令来部署。就算不安装git直接在github网站编辑提交也可以。 为什么要部署在多个服务器上？1；【免费】github 使用方便，空间大，存放代码方便，但是在美国，在国内的访问速度是比较慢的。2；【免费】codeing.net 是国内的，但是它的静态网站托管功能服务器是在香港的，在国内打开速度是不慢的，但是据测不是很稳定。3；【收费】因此在添加一个国内的服务器或者ftp？这样更稳定，如果不想续费了，有前面两个网站还是可以打开的。 本地搭建 hexo 博客环境建立代码仓库coding.net的免费会员的git仓库空间只有128M，还不能绑定自定义域名，可以免费升级到银牌会员有512M，可以绑定自定义域名。 因此：hexo的代码是放在github上同时也放生成后的静态网页，coding.net 只存放生成后的静态网页。 建立 github 仓库仓库名必须是 {username}.github.io 的格式，如 cooldev.github.io 主分支默认为master，建立一个分支 blog-source 用来存放 hexo 的代码。 建立 coding 仓库coding.net的 Pages 服务是分两种的，用户Pages和 项目Pages ,参见官方文档 Coding Pages 类型 Pages 默认分配的 URL 允许的部署来源 用户 Pages {user_name}.coding.me master 分支 项目 Pages {user_name}.coding.me/{project_name} master 分支、coding-pages 分支、或 master 分支中的 /docs 目录 比如你的用户名是cooldev ，如果创建的仓库名 是 cooldev.coding.me ， 那么访问的域名就是 http://cooldev.coding.me如果创建的仓库名其他名字如blog ，访问域名是 http://cooldev.coding.me/blog 这个其实没有什么影响，因为我们要绑定域名，不用默认分配的域名。 这里只要一个master分支就行了。 创建仓库完毕后，进入项目 开启 Pages 服务。参见官方文档 通过SSH连接 Github 和 Coding使用 gitBash 命令行 工具输入，直接三次回车不需要输入密码 1ssh-keygen -t rsa 生成两个文件，id_rsa 和 id_ras.pub ，默认生成目录： Linux 系统：~/.ssh Mac 系统：~/.ssh Windows 7及以上系统：C:\Users{username}.ssh 管理员：C:\Users\Administrator.ssh Travis CI自动构建部署使用的是 Travis CI ，可以完美的和 github 的搭配起来，当往 github 提交后会自动触发 Travis 的构建过程。了解什么是 Travis ，可以参考阮一峰的博客文章《持续集成服务 Travis CI 教程》 使用 Travis 命令行加密文件和文本hexo 的 deploy 可以通过 Git , FTPSync，Rsync ，SFTP，Heroku，OpenShift 方式部署，可以参见 hexo 的部署文档 通过 Git 的方式 需要使用 SSH 秘钥文件，通过 FTPSync 的方式 需要使用FTP的账号密码； 通过 Travis CI 部署又需要将这些信息放在github里面 ，这些都是不可以公开的，但是在 github 和 codeing.net 的代码都是公开的（私有项目需要付费）， 所以需要加密 才能保证信息的安全。 加密使用的是 Travis 的命令行工具，Travis命令行工具是基于 Ruby 语言的，所以我们需要先在本地安装 Ruby 环境并安装 travis命令行 1gem install travis 进行登录,输入github账号密码登录 ，在cmd中运行，不要在gitbash中运行。 1travis login 然后在博客的根目录下建立 .travis 文件夹来存放相关的资料（以下操作在gitbash中输入，不分操作系统）： 1234mkdir .travis &amp;&amp; cd .traviscp ~/.ssh/id_rsa .travis encrypt-file id_rsa --addrm id_rsa 会输出如下： 1234567891011travis encrypt-file id_rsadetected repository as buyucoder/cooldev.github.ioencrypting id_rsa for buyucoder/cooldev.github.iostoring result as id_rsa.encstoring secure env variables for decryptionopenssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -dMake sure to add id_rsa.enc to the git repository.Make sure not to add id_rsa to the git repository.Commit all changes to your .travis.yml. 生成加密后的文件是id_rsa.enc , 其中 openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d就是要添加到 .travis.yml 文件中的，可以直接使用 travis encrypt-file id_rsa --add 自动将命令添加到 .travis.yml 文件中。 $encrypted_770f1dea3d53_key 和 $encrypted_770f1dea3d53_iv 是环境变量， 会保存在 Travis CI 网站中对应项目的设置中，Travis 在构建时需要这两个值来进行解密。 将 ftp 主机地址，用户名 和密码进行加密 123travis encrypt FTP_HOST=qxu1606600007.my3w.com --addtravis encrypt FTP_USER=qxu1606600007 --addtravis encrypt FTP_PASSWORD=qxu160660000789757 --add 常见错误1.openssl 解密错误travis 在windows系统下加密文件，会导致解不开，需要使用linux 和mac 系统。。。https://www.jianshu.com/p/3dafd38f3733https://docs.travis-ci.com/user/encrypting-files/ travis encrypt-file id_rsa -r buyucoder/cooldev.github.io]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[搜索神器Everything 1.4.1.895]]></title>
+    <url>%2Fblog%2F2018%2F05%2F14%2Feverything%2F</url>
+    <content type="text"><![CDATA[搜索神器Everything 1.4.1.895 最后有Everything 1.4.1.89有下载地址 更易用的设置方法: 下载后解压,无需安装; 安装完毕后设置随机启动； 搜索关键词为空不显示搜索结果； 高亮光标经过行； 快捷键：新建窗口快捷键：Win+N 排除列表：c:\windows\prefetch 然后用 Win+N 享用吧~~~ 下面是每一步的截图,方便大家对照操作。 找到 工具-选项 2.开机启动 3.搜索关键词为空不显示搜索结果 4. 高亮光标经过行 5. 快捷键：新建窗口快捷键：Win+N 6. 排除列表：c:\windows\prefetch Everything 1.4.1.895 下载 32位下载 64位下载]]></content>
+      <categories>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>搜索神器</tag>
+      </tags>
+  </entry>
+</search>

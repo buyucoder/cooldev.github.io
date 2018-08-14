@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://cooldev.cn/categories/index.html</loc>
+    
+    <lastmod>2018-08-14T14:24:03.077Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cooldev.cn/tags/index.html</loc>
+    
+    <lastmod>2018-08-14T14:24:03.077Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cooldev.cn/2018/08/14/centos7%E4%BF%AE%E6%94%B9%E6%97%B6%E5%8C%BA/</loc>
+    
+    <lastmod>2018-08-14T02:39:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cooldev.cn/2018/08/14/hexo-blog/</loc>
+    
+    <lastmod>2018-08-14T02:39:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://cooldev.cn/2018/05/14/everything/</loc>
+    
+    <lastmod>2018-05-14T02:39:30.000Z</lastmod>
+    
+  </url>
+  
+</urlset>

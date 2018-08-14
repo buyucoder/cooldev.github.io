@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>CoolDev博客</title>
+  
+  
+  <link href="/blog/atom.xml" rel="self"/>
+  
+  <link href="http://cooldev.cn/"/>
+  <updated>2018-08-14T02:39:30.000Z</updated>
+  <id>http://cooldev.cn/</id>
+  
+  <author>
+    <name>buyucoder</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Centos7 修改时区</title>
+    <link href="http://cooldev.cn/2018/08/14/centos7%E4%BF%AE%E6%94%B9%E6%97%B6%E5%8C%BA/"/>
+    <id>http://cooldev.cn/2018/08/14/centos7修改时区/</id>
+    <published>2018-08-14T02:39:21.000Z</published>
+    <updated>2018-08-14T02:39:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>查看时区:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[vagrant@localhost ~]$ timedatectl | grep &quot;Time zone&quot;</span><br><span class="line">       Time zone: UTC (UTC, +0000)</span><br></pre></td></tr></table></figure></p><a id="more"></a><p>修改时区:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure></p><p>使用ntpdate 同步时间:</p><p>安装:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y ntpdate</span><br></pre></td></tr></table></figure></p><p>ntpdate 时间服务器</p><p>时间服务器:<a href="https://blog.csdn.net/maxsky/article/details/53866475" target="_blank" rel="noopener">https://blog.csdn.net/maxsky/article/details/53866475</a></p><p>推荐使用:</p><p>pool.ntp.org<br>阿里云的:<br>ntp1.aliyun.com<br>ntp2.aliyun.com<br>ntp3.aliyun.com<br>ntp4.aliyun.com<br>ntp5.aliyun.com<br>ntp6.aliyun.com<br>ntp7.aliyun.com</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ntpdate ntp1.aliyun.com</span><br></pre></td></tr></table></figure><p>crontab定时任务 同步时间:</p><p>使用<code>crontab -e</code> 添加一行,每20分钟同步一次时间:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/20 * * * * /sbin/ntpdate pool.ntp.org &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;查看时区:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[vagrant@localhost ~]$ timedatectl | grep &amp;quot;Time zone&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       Time zone: UTC (UTC, +0000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://cooldev.cn/categories/Linux/"/>
+    
+    
+      <category term="Centos7" scheme="http://cooldev.cn/tags/Centos7/"/>
+    
+      <category term="时区" scheme="http://cooldev.cn/tags/%E6%97%B6%E5%8C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于hexo博客多服务器全自动构建部署系统</title>
+    <link href="http://cooldev.cn/2018/08/14/hexo-blog/"/>
+    <id>http://cooldev.cn/2018/08/14/hexo-blog/</id>
+    <published>2018-08-14T02:39:21.000Z</published>
+    <updated>2018-08-14T02:39:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>将hexo博客系统自动部署到多个服务器上</p><p>目标：</p><ul><li>自动部署到以下服务器:</li></ul><ol><li><a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a> </li><li><a href="https://coding.net/v1/pages/" target="_blank" rel="noopener">coding Pages</a></li><li>自建服务器/FTP</li></ol><ul><li>通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。</li></ul><a id="more"></a><h2 id="为什么需要自动构建部署？"><a href="#为什么需要自动构建部署？" class="headerlink" title="为什么需要自动构建部署？"></a>为什么需要自动构建部署？</h2><p>hexo 静态博客的优点：全静态，可以用markdown写文字，部署简单，免费的github或一个ftp空间都可以存放。<br>缺点是：hexo 是基于 nodejs 的，需要安装 nodejs 环境，当我们换了一台电脑需要重新安装环境，并从 github 上克隆下来 博客的代码，略显繁琐，同时每一次新发布文章或者修改了hexo或者主题的配置，都需要 敲命令 hexo generate 和 hexo deploy 来部署，也是略显繁琐。</p><p>如果 hexo generate  和 hexo deploy 的过程能够自动，那么当更换电脑时只要下载git环境，写markdown提交就行了，不需要安装nodejs也不需要敲命令来部署。就算不安装git直接在github网站编辑提交也可以。</p><h2 id="为什么要部署在多个服务器上？"><a href="#为什么要部署在多个服务器上？" class="headerlink" title="为什么要部署在多个服务器上？"></a>为什么要部署在多个服务器上？</h2><p>1；【免费】<a href="https://github.com" target="_blank" rel="noopener">github</a> 使用方便，空间大，存放代码方便，但是在美国，在国内的访问速度是比较慢的。<br>2；【免费】codeing.net 是国内的，但是它的静态网站托管功能服务器是在香港的，在国内打开速度是不慢的，但是据测不是很稳定。<br>3；【收费】因此在添加一个国内的服务器或者ftp？这样更稳定，如果不想续费了，有前面两个网站还是可以打开的。</p><h2 id="本地搭建-hexo-博客环境"><a href="#本地搭建-hexo-博客环境" class="headerlink" title="本地搭建 hexo 博客环境"></a>本地搭建 hexo 博客环境</h2><h2 id="建立代码仓库"><a href="#建立代码仓库" class="headerlink" title="建立代码仓库"></a>建立代码仓库</h2><p>coding.net的免费会员的git仓库空间只有128M，还不能绑定自定义域名，可以免费升级到银牌会员有512M，可以绑定自定义域名。</p><p>因此：<br>hexo的代码是放在github上同时也放生成后的静态网页，coding.net 只存放生成后的静态网页。</p><h3 id="建立-github-仓库"><a href="#建立-github-仓库" class="headerlink" title="建立 github 仓库"></a>建立 github 仓库</h3><p>仓库名必须是 {username}.github.io 的格式，如 cooldev.github.io</p><p>主分支默认为master，建立一个分支 blog-source 用来存放 hexo 的代码。</p><h3 id="建立-coding-仓库"><a href="#建立-coding-仓库" class="headerlink" title="建立 coding 仓库"></a>建立 coding 仓库</h3><p>coding.net的 Pages 服务是分两种的，用户Pages和 项目Pages ,参见<a href="https://coding.net/help/doc/pages/creating-pages.html" target="_blank" rel="noopener">官方文档</a></p><table><thead><tr><th>Coding Pages 类型</th><th>Pages 默认分配的 URL</th><th>允许的部署来源</th><th></th></tr></thead><tbody><tr><td>用户 Pages</td><td>{user_name}.coding.me</td><td>master 分支</td><td></td></tr><tr><td>项目 Pages</td><td>{user_name}.coding.me/{project_name}</td><td>master 分支、coding-pages 分支、或 master 分支中的 /docs 目录</td></tr></tbody></table><p>比如你的用户名是cooldev ，如果创建的仓库名 是  cooldev.coding.me ， 那么访问的域名就是 <a href="http://cooldev.coding.me" target="_blank" rel="noopener">http://cooldev.coding.me</a><br>如果创建的仓库名其他名字如blog ，访问域名是 <a href="http://cooldev.coding.me/blog" target="_blank" rel="noopener">http://cooldev.coding.me/blog</a></p><p>这个其实没有什么影响，因为我们要绑定域名，不用默认分配的域名。</p><p>这里只要一个master分支就行了。</p><p>创建仓库完毕后，进入项目 开启 Pages 服务。参见官方<a href="https://coding.net/help/doc/pages/creating-pages.html#_Pages" target="_blank" rel="noopener">文档</a></p><h2 id="通过SSH连接-Github-和-Coding"><a href="#通过SSH连接-Github-和-Coding" class="headerlink" title="通过SSH连接 Github 和 Coding"></a>通过SSH连接 Github 和 Coding</h2><p>使用 gitBash 命令行 工具输入，直接三次回车不需要输入密码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure><p>生成两个文件，id_rsa 和 id_ras.pub ，默认生成目录：</p><ul><li>Linux 系统：~/.ssh </li><li>Mac 系统：~/.ssh </li><li>Windows 7及以上系统：C:\Users{username}.ssh  管理员：C:\Users\Administrator.ssh</li></ul><h2 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h2><p>自动构建部署使用的是 <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a> ，可以完美的和 github 的搭配起来，当往 github 提交后会自动触发 Travis 的构建过程。<br>了解什么是 Travis ，可以参考阮一峰的博客文章《<a href="http://www.ruanyifeng.com/blog/2017/12/travis_ci_tutorial.html" target="_blank" rel="noopener">持续集成服务 Travis CI 教程</a>》</p><h2 id="使用-Travis-命令行加密文件和文本"><a href="#使用-Travis-命令行加密文件和文本" class="headerlink" title="使用 Travis 命令行加密文件和文本"></a>使用 Travis 命令行加密文件和文本</h2><p>hexo 的 deploy 可以通过 Git  , FTPSync，Rsync ，SFTP，Heroku，OpenShift  方式部署，可以参见 hexo 的<a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">部署文档</a></p><p>通过 Git 的方式 需要使用 SSH 秘钥文件，<br>通过 FTPSync 的方式 需要使用FTP的账号密码；</p><p>通过 Travis CI 部署又需要将这些信息放在github里面 ，这些都是不可以公开的，但是在 github 和 codeing.net 的代码都是公开的（私有项目需要付费）， 所以需要加密 才能保证信息的安全。</p><p>加密使用的是 Travis 的命令行工具，Travis命令行工具是基于 Ruby 语言的，所以我们需要先在本地安装 Ruby 环境并安装 travis命令行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install travis</span><br></pre></td></tr></table></figure><p>进行登录,输入github账号密码登录 ，在cmd中运行，不要在gitbash中运行。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">travis login</span><br></pre></td></tr></table></figure><p>然后在博客的根目录下建立 .travis 文件夹来存放相关的资料（以下操作在gitbash中输入，不分操作系统）：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir .travis &amp;&amp; cd .travis</span><br><span class="line">cp ~/.ssh/id_rsa .</span><br><span class="line">travis encrypt-file id_rsa --add</span><br><span class="line">rm id_rsa</span><br></pre></td></tr></table></figure><p>会输出如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt-file id_rsa</span><br><span class="line">detected repository as buyucoder/cooldev.github.io</span><br><span class="line">encrypting id_rsa for buyucoder/cooldev.github.io</span><br><span class="line">storing result as id_rsa.enc</span><br><span class="line">storing secure env variables for decryption</span><br><span class="line"></span><br><span class="line">openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d</span><br><span class="line"></span><br><span class="line">Make sure to add id_rsa.enc to the git repository.</span><br><span class="line">Make sure not to add id_rsa to the git repository.</span><br><span class="line">Commit all changes to your .travis.yml.</span><br></pre></td></tr></table></figure><p>生成加密后的文件是<code>id_rsa.enc</code> , 其中 <code>openssl aes-256-cbc -K $encrypted_770f1dea3d53_key -iv $encrypted_770f1dea3d53_iv -in id_rsa.enc -out id_rsa -d</code><br>就是要添加到 .travis.yml 文件中的，可以直接使用 <code>travis encrypt-file id_rsa --add</code> 自动将命令添加到 .travis.yml 文件中。</p><p>$encrypted_770f1dea3d53_key 和 $encrypted_770f1dea3d53_iv 是环境变量， 会保存在 Travis CI 网站中对应项目的设置中，Travis 在构建时需要这两个值来进行解密。</p><p>将 ftp 主机地址，用户名 和密码进行加密</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt FTP_HOST=qxu1606600007.my3w.com --add</span><br><span class="line">travis encrypt FTP_USER=qxu1606600007 --add</span><br><span class="line">travis encrypt FTP_PASSWORD=qxu160660000789757 --add</span><br></pre></td></tr></table></figure><h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>1.openssl 解密错误<br>travis 在windows系统下加密文件，会导致解不开，需要使用linux 和mac 系统。。。<br><a href="https://www.jianshu.com/p/3dafd38f3733" target="_blank" rel="noopener">https://www.jianshu.com/p/3dafd38f3733</a><br><a href="https://docs.travis-ci.com/user/encrypting-files/" target="_blank" rel="noopener">https://docs.travis-ci.com/user/encrypting-files/</a></p><p>travis encrypt-file id_rsa  -r  buyucoder/cooldev.github.io</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;将hexo博客系统自动部署到多个服务器上&lt;/p&gt;
+&lt;p&gt;目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;自动部署到以下服务器:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Github Pages&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://coding.net/v1/pages/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;coding Pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;自建服务器/FTP&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;通过一个域名智能分配流量到最快的服务,国内国外都能快速打开博客。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://cooldev.cn/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="博客" scheme="http://cooldev.cn/tags/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="hexo" scheme="http://cooldev.cn/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搜索神器Everything 1.4.1.895</title>
+    <link href="http://cooldev.cn/2018/05/14/everything/"/>
+    <id>http://cooldev.cn/2018/05/14/everything/</id>
+    <published>2018-05-14T02:39:21.000Z</published>
+    <updated>2018-05-14T02:39:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>搜索神器Everything 1.4.1.895</p><p>最后有Everything 1.4.1.89有下载地址</p><p>更易用的设置方法:</p><ol><li>下载后解压,无需安装; </li><li>安装完毕后设置随机启动； </li><li>搜索关键词为空不显示搜索结果； </li><li>高亮光标经过行；</li><li>快捷键：新建窗口快捷键：Win+N </li><li>排除列表：c:\windows\prefetch</li></ol><a id="more"></a><p>然后用 Win+N 享用吧~~~</p><p>下面是每一步的截图,方便大家对照操作。</p><p>找到 <code>工具-选项</code></p><h3 id="2-开机启动"><a href="#2-开机启动" class="headerlink" title="2.开机启动"></a>2.开机启动</h3><p><img src="http://cooldev-1251672755.cossh.myqcloud.com/cooldev/1523546184347.jpg" alt="enter description here"></p><h3 id="3-搜索关键词为空不显示搜索结果"><a href="#3-搜索关键词为空不显示搜索结果" class="headerlink" title="3.搜索关键词为空不显示搜索结果"></a>3.搜索关键词为空不显示搜索结果</h3><p><img src="http://cooldev-1251672755.cossh.myqcloud.com/cooldev/1523546320550.jpg" alt="enter description here"></p><h3 id="4-高亮光标经过行"><a href="#4-高亮光标经过行" class="headerlink" title="4. 高亮光标经过行"></a>4. 高亮光标经过行</h3><p><img src="http://cooldev-1251672755.cossh.myqcloud.com/cooldev/1523546389374.jpg" alt="enter description here"></p><h3 id="5-快捷键：新建窗口快捷键：Win-N"><a href="#5-快捷键：新建窗口快捷键：Win-N" class="headerlink" title="5.  快捷键：新建窗口快捷键：Win+N"></a>5.  快捷键：新建窗口快捷键：Win+N</h3><p><img src="http://cooldev-1251672755.cossh.myqcloud.com/cooldev/1523546415475.jpg" alt="enter description here"></p><h3 id="6-排除列表：c-windows-prefetch"><a href="#6-排除列表：c-windows-prefetch" class="headerlink" title="6. 排除列表：c:\windows\prefetch"></a>6. 排除列表：c:\windows\prefetch</h3><p><img src="http://cooldev-1251672755.cossh.myqcloud.com/cooldev/1523546444914.jpg" alt="enter description here"></p><p><code>Everything 1.4.1.895 下载</code></p><p><a href="https://pan.lanzou.com/i0tya7a" target="_blank" rel="noopener">32位下载</a></p><p><a href="https://pan.lanzou.com/i0tya4h" target="_blank" rel="noopener">64位下载</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;搜索神器Everything 1.4.1.895&lt;/p&gt;
+&lt;p&gt;最后有Everything 1.4.1.89有下载地址&lt;/p&gt;
+&lt;p&gt;更易用的设置方法:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;下载后解压,无需安装; &lt;/li&gt;
+&lt;li&gt;安装完毕后设置随机启动； &lt;/li&gt;
+&lt;li&gt;搜索关键词为空不显示搜索结果； &lt;/li&gt;
+&lt;li&gt;高亮光标经过行；&lt;/li&gt;
+&lt;li&gt;快捷键：新建窗口快捷键：Win+N &lt;/li&gt;
+&lt;li&gt;排除列表：c:\windows\prefetch&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="软件" scheme="http://cooldev.cn/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="搜索神器" scheme="http://cooldev.cn/tags/%E6%90%9C%E7%B4%A2%E7%A5%9E%E5%99%A8/"/>
+    
+  </entry>
+  
+</feed>
