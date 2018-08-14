@@ -1,5 +1,14 @@
 ---
+layout: post
 title: 基于hexo博客多服务器全自动构建部署系统
+date: 2018/8/14 10:39:21
+updated: 2018/8/14 10:39:30
+comments: true
+tags: 
+- 博客
+- hexo
+categories: 
+- 技术
 ---
 
 将hexo博客系统自动部署到多个服务器上

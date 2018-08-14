@@ -1,5 +1,13 @@
 ---
+layout: post
 title: 搜索神器Everything 1.4.1.895
+date: 2018/5/14 10:39:21
+updated: 2018/5/14 10:39:30
+comments: true
+tags: 
+- 搜索神器
+categories: 
+- 软件
 ---
 
 搜索神器Everything 1.4.1.895
