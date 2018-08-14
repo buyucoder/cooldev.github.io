@@ -23,6 +23,8 @@ categories:
  5.  快捷键：新建窗口快捷键：Win+N 
  6. 排除列表：c:\windows\prefetch
 
+<!--more-->
+
 然后用 Win+N 享用吧~~~
 
 下面是每一步的截图,方便大家对照操作。

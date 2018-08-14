@@ -24,6 +24,9 @@ categories:
 {% centerquote %} 文本居中 {% endcenterquote %}
 
 
+<!--more-->
+
+
 ### 图片突出放大
 ```
 {% fullimage /image-url, alt, title %}

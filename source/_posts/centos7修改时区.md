@@ -17,6 +17,7 @@ categories:
 [vagrant@localhost ~]$ timedatectl | grep "Time zone"
        Time zone: UTC (UTC, +0000)
 ```
+<!--more-->
 
 修改时区:
 ```
