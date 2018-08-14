@@ -22,6 +22,9 @@ install:
 - npm install
 script:
 - hexo generate && gulp
+- mkdir public/blog
+- mv -f public/* public/blog/
+- mv -f public/blog/CNAME /public/CNAME
 after_success:
 - hexo deploy
 #- gulp deploy-ftp --host $FTP_HOST --user $FTP_USER --password $FTP_PASSWORD
